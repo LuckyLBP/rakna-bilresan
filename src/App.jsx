@@ -436,7 +436,8 @@ export default function App() {
   const [endCoords,   setEndCoords]   = useState(null)
 
   // UI state
-  const [loading,   setLoading]   = useState(false)
+  const [routePreview, setRoutePreview] = useState(null) // { geometry, distM, durSec }
+  const [loading,       setLoading]       = useState(false)
   const [error,     setError]     = useState(null)
   const [results,   setResults]   = useState(null)
   const [animKey,   setAnimKey]   = useState(0)
@@ -449,17 +450,34 @@ export default function App() {
     setCons(CARS[type].cons)
   }, [])
 
-  const handleStartChange = useCallback(val => { setStartVal(val);    setStartCoords(null) }, [])
-  const handleEndChange   = useCallback(val => { setEndVal(val);      setEndCoords(null)   }, [])
-  const handleStartSelect = useCallback(coords => setStartCoords(coords), [])
-  const handleEndSelect   = useCallback(coords => setEndCoords(coords),   [])
+  const handleStartChange = useCallback(val => { setStartVal(val); setStartCoords(null); setRoutePreview(null) }, [])
+  const handleEndChange   = useCallback(val => { setEndVal(val);   setEndCoords(null);   setRoutePreview(null) }, [])
+  const handleStartSelect = useCallback(coords => { setStartCoords(coords); setRoutePreview(null) }, [])
+  const handleEndSelect   = useCallback(coords => { setEndCoords(coords);   setRoutePreview(null) }, [])
+
+  // Fetch route geometry + stats as soon as both coords are selected
+  useEffect(() => {
+    if (!startCoords || !endCoords) return
+    let cancelled = false
+    ;(async () => {
+      try {
+        const res  = await fetch(`https://router.project-osrm.org/route/v1/driving/${startCoords.lon},${startCoords.lat};${endCoords.lon},${endCoords.lat}?overview=full&geometries=geojson`)
+        const data = await res.json()
+        if (!cancelled && data.code === 'Ok' && data.routes?.length) {
+          const r = data.routes[0]
+          setRoutePreview({ geometry: r.geometry, distM: r.distance, durSec: r.duration })
+        }
+      } catch { /* silent */ }
+    })()
+    return () => { cancelled = true }
+  }, [startCoords, endCoords])
 
   const calculate = async () => {
     setError(null)
-    if (!startVal.trim())          { setError('Ange en startort.');           return }
-    if (!endVal.trim())            { setError('Ange en destination.');         return }
+    if (!startVal.trim())             { setError('Ange en startort.');           return }
+    if (!endVal.trim())               { setError('Ange en destination.');         return }
     if (!fuelPrice || fuelPrice <= 0) { setError('Ange ett giltigt bränslepris.'); return }
-    if (!cons || cons <= 0)        { setError('Ange en giltig förbrukning.'); return }
+    if (!cons || cons <= 0)           { setError('Ange en giltig förbrukning.'); return }
 
     setLoading(true)
     try {
@@ -471,15 +489,20 @@ export default function App() {
       if (!ec) throw new Error(`Hittade inte "${endVal}". Pröva ett mer specifikt namn.`)
       setEndCoords(ec)
 
-      const osrmRes  = await fetch(`https://router.project-osrm.org/route/v1/driving/${sc.lon},${sc.lat};${ec.lon},${ec.lat}?overview=full&geometries=geojson`)
-      const osrmData = await osrmRes.json()
-
-      if (osrmData.code !== 'Ok' || !osrmData.routes?.length) {
-        throw new Error('Kunde inte beräkna rutten. Kontrollera orterna och försök igen.')
+      // Use cached preview; fall back to a fresh fetch if coords were just geocoded
+      let preview = routePreview
+      if (!preview) {
+        const res  = await fetch(`https://router.project-osrm.org/route/v1/driving/${sc.lon},${sc.lat};${ec.lon},${ec.lat}?overview=full&geometries=geojson`)
+        const data = await res.json()
+        if (data.code !== 'Ok' || !data.routes?.length) {
+          throw new Error('Kunde inte beräkna rutten. Kontrollera orterna och försök igen.')
+        }
+        const r = data.routes[0]
+        preview = { geometry: r.geometry, distM: r.distance, durSec: r.duration }
+        setRoutePreview(preview)
       }
 
-      let distM  = osrmData.routes[0].distance
-      let durSec = osrmData.routes[0].duration
+      let { distM, durSec } = preview
       if (roundTrip) { distM *= 2; durSec *= 2 }
 
       const distKm    = distM / 1000
@@ -492,7 +515,6 @@ export default function App() {
         endName:   endVal.split(',')[0].trim(),
         carType, fuelUsed, fuelPrice, persons,
         isRoundTrip: roundTrip,
-        geometry:    osrmData.routes[0].geometry,
         startCoords: sc,
         endCoords:   ec,
       })
@@ -559,7 +581,7 @@ export default function App() {
               <RouteMap
                 startCoords={startCoords}
                 endCoords={endCoords}
-                geometry={results?.geometry}
+                geometry={routePreview?.geometry}
               />
             </div>
           )}
