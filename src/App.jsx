@@ -66,7 +66,7 @@ function fmtTime(sec) {
 
 async function geocodeQuery(q) {
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1&countrycodes=se`
-  const res = await fetch(url, { headers: { 'Accept-Language': 'sv', 'User-Agent': 'RäknaBilresan.se/1.0' } })
+  const res = await fetch(url, { headers: { 'Accept-Language': 'sv', 'User-Agent': 'Räknabilresa.se/1.0' } })
   const data = await res.json()
   if (!data?.length) return null
   return { lat: +data[0].lat, lon: +data[0].lon }
@@ -95,7 +95,7 @@ function AutocompleteInput({ id, label, placeholder, value, onChange, onSelect, 
     timerRef.current = setTimeout(async () => {
       try {
         const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(val)}&format=json&limit=5&countrycodes=se&addressdetails=1`
-        const res = await fetch(url, { headers: { 'Accept-Language': 'sv', 'User-Agent': 'RäknaBilresan.se/1.0' } })
+        const res = await fetch(url, { headers: { 'Accept-Language': 'sv', 'User-Agent': 'Räknabilresa.se/1.0' } })
         const data = await res.json()
         setSuggestions(data ?? [])
         setHiIdx(-1)
@@ -536,8 +536,8 @@ export default function App() {
     <>
       <header>
         <a className="logo" href="#">
-          <img className="logo-img" src="/Rakna_bilresan_logo.jpg" alt="RäknaBilresan.se logotyp" />
-          <span className="logo-name">RäknaBilresan<span>.se</span></span>
+          <img className="logo-img" src="/Rakna_bilresan_logo.jpg" alt="Räknabilresa.se logotyp" />
+          <span className="logo-name">Räknabilresa<span>.se</span></span>
         </a>
         <span className="header-tag">Resekostnadsberäknare</span>
       </header>
@@ -676,11 +676,11 @@ export default function App() {
       <footer>
         <div className="footer-about">
           <div className="footer-logo-row">
-            <span className="footer-brand">Produktionen AB</span>
+            <a className="footer-brand" href="https://produktionen.se" target="_blank" rel="noopener noreferrer">Produktionen AB</a>
           </div>
           <p className="footer-desc">
             Vi är webbutvecklare som älskar att bygga smarta, enkla verktyg — stora som små.
-            RäknaBilresan.se är ett av dem, helt kostnadsfritt att använda.
+            Räknabilresa.se är ett av dem, helt kostnadsfritt att använda.
             Hoppas det underlättar din nästa resa!
           </p>
           <p className="footer-cta">
