@@ -3,8 +3,111 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RäknaBilresan.se — Beräkna din bilresa</title>
-    <meta name="description" content="Beräkna kostnaden för din bilresa. Välj biltyp, ange bränslepris och se total kostnad, distans och restid." />
+
+    <!-- ─── Primary SEO ─────────────────────────────────── -->
+    <title>Beräkna kostnad för bilresa | RäknaBilresan.se</title>
+    <meta name="description" content="Beräkna exakt vad din bilresa kostar. Ange start och destination — få total kostnad, distans och restid för bensin, diesel, elbil och hybrid. Gratis kalkylator." />
+    <meta name="keywords" content="beräkna kostnad bilresa, bilresekalkylator, räkna ut bränsleförbrukning, bränslepris kalkylator, hur mycket kostar det att köra bil, kostnad per mil, bensin kalkylator, elbil kostnad resa, bilresa kostnad Sverige" />
+    <link rel="canonical" href="https://raknabilresan.se/" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Produktionen AB" />
+
+    <!-- ─── Open Graph (Facebook, LinkedIn, iMessage) ───── -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content="https://raknabilresan.se/" />
+    <meta property="og:title"       content="Beräkna kostnad för bilresa — RäknaBilresan.se" />
+    <meta property="og:description" content="Gratis kalkylator för bilresekostnader. Ange start, destination och biltyp — få total kostnad, distans och restid direkt." />
+    <meta property="og:locale"      content="sv_SE" />
+    <meta property="og:site_name"   content="RäknaBilresan.se" />
+
+    <!-- ─── Twitter Card ────────────────────────────────── -->
+    <meta name="twitter:card"        content="summary" />
+    <meta name="twitter:title"       content="Beräkna kostnad för bilresa — RäknaBilresan.se" />
+    <meta name="twitter:description" content="Gratis kalkylator för bilresekostnader. Bensin, diesel, elbil och hybrid. Distans, restid och kostnad per person." />
+
+    <!-- ─── Structured Data (JSON-LD) ───────────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "RäknaBilresan.se",
+      "url": "https://raknabilresan.se/",
+      "description": "Gratis kalkylator för att beräkna kostnaden för en bilresa i Sverige. Stöd för bensin, diesel, elbil och hybrid.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web",
+      "inLanguage": "sv-SE",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "SEK"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "Produktionen AB",
+        "url": "https://raknabilresan.se"
+      },
+      "featureList": [
+        "Beräkna bränslekostnad för bilresa",
+        "Stöd för bensin, diesel, elbil och hybrid",
+        "Kostnad per person",
+        "Tur och retur",
+        "Interaktiv karta med ruttvisning",
+        "Verklig distans via OSRM",
+        "Länk till Google Maps och Apple Maps"
+      ]
+    }
+    </script>
+
+    <!-- ─── FAQ Structured Data ──────────────────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hur beräknar man kostnaden för en bilresa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kostnaden för en bilresa beräknas genom att multiplicera distansen (i km) med bilens förbrukning (liter per 100 km) och sedan multiplicera med aktuellt bränslepris. Formeln är: (distans × förbrukning / 100) × bränslepris = total kostnad."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vad kostar det att köra bil per mil i Sverige?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Med ett genomsnittligt bensinpris på ca 18–19 kr/liter och en förbrukning på 8–9 liter/100 km kostar det ungefär 14–17 kr per mil att köra bensinbil. För diesel är kostnaden något lägre. Elbil kostar typiskt 5–8 kr per mil beroende på elpriset."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hur mycket bränsle går det åt på en lång bilresa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En genomsnittlig bensinbil förbrukar 7–10 liter per 100 km. På en resa Stockholm–Göteborg (ca 47 mil) går det åt ungefär 33–47 liter bränsle, vilket kostar ca 600–900 kr."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Är det billigare att köra elbil än bensinbil?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, i de flesta fall. En elbil förbrukar typiskt 15–25 kWh per 100 km. Med ett elpris på 2–3 kr/kWh kostar det 30–75 kr per 10 mil, jämfört med 130–180 kr för en bensinbil."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- ─── Favicon ────────────────────────────────────────── -->
+    <link rel="icon"             type="image/jpeg" href="/Rakna_bilresan_logo.jpg" />
+    <link rel="apple-touch-icon"                   href="/Rakna_bilresan_logo.jpg" />
+    <meta property="og:image"   content="https://raknabilresan.se/Rakna_bilresan_logo.jpg" />
+    <meta name="twitter:image"  content="https://raknabilresan.se/Rakna_bilresan_logo.jpg" />
+
+    <!-- ─── Fonts ─────────────────────────────────────────── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />

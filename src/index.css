@@ -68,14 +68,11 @@ header {
   user-select: none;
 }
 
-.logo-mark {
-  width: 32px;
-  height: 32px;
-  background: var(--gold);
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.logo-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  object-fit: cover;
   flex-shrink: 0;
 }
 
@@ -898,6 +895,85 @@ main {
 .bd-row:last-child { border-bottom: none; }
 .bd-key { color: var(--gray-600); font-weight: 400; }
 .bd-val { color: var(--navy); font-weight: 600; }
+
+/* ─── FOOTER ──────────────────────────────────────────── */
+/* ─── FAQ SECTION ─────────────────────────────────────── */
+.seo-section {
+  margin-bottom: 1rem;
+}
+
+.faq-card-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--gray-400);
+  margin-bottom: 0.25rem;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.faq-item.last {
+  border-bottom: none;
+}
+
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.9rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.faq-q-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.4;
+}
+
+.faq-chevron {
+  color: var(--gray-400);
+  flex-shrink: 0;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), color .2s;
+}
+
+.faq-item.open .faq-chevron {
+  transform: rotate(180deg);
+  color: var(--navy);
+}
+
+.faq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease;
+}
+
+.faq-item.open .faq-body {
+  max-height: 400px;
+}
+
+.faq-a {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  line-height: 1.7;
+  font-weight: 300;
+  padding-bottom: 0.875rem;
+}
 
 /* ─── FOOTER ──────────────────────────────────────────── */
 footer {
