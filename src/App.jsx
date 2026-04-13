@@ -66,7 +66,7 @@ function fmtTime(sec) {
 }
 
 async function geocodeQuery(q) {
-  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1&countrycodes=se`
+  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1`
   const res = await fetch(url, { headers: { 'Accept-Language': 'sv', 'User-Agent': 'Räknabilresa.se/1.0' } })
   const data = await res.json()
   if (!data?.length) return null
@@ -95,7 +95,7 @@ function AutocompleteInput({ id, label, placeholder, value, onChange, onSelect, 
     if (val.trim().length < 2) { setSuggestions([]); setOpen(false); return }
     timerRef.current = setTimeout(async () => {
       try {
-        const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(val)}&format=json&limit=5&countrycodes=se&addressdetails=1`
+        const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(val)}&format=json&limit=5&addressdetails=1`
         const res = await fetch(url, { headers: { 'Accept-Language': 'sv', 'User-Agent': 'Räknabilresa.se/1.0' } })
         const data = await res.json()
         setSuggestions(data ?? [])
@@ -547,7 +547,7 @@ export default function App() {
         <div className="hero">
           <div className="hero-eyebrow">Bilresa</div>
           <h1>Vad kostar<br /><em>resan egentligen?</em></h1>
-          <p>Ange start och destination — vi hämtar distans, beräknar bränslekostnad och uppskattar restiden.</p>
+          <p>Ange start och destination i Sverige eller Europa — vi hämtar distans, beräknar bränslekostnad och uppskattar restiden.</p>
         </div>
 
         {/* ── Form card ── */}
@@ -559,7 +559,7 @@ export default function App() {
             <AutocompleteInput
               id="inp-start"
               label="Startort"
-              placeholder="T.ex. Stockholm"
+              placeholder="T.ex. Stockholm, Berlin…"
               value={startVal}
               onChange={handleStartChange}
               onSelect={handleStartSelect}
@@ -569,7 +569,7 @@ export default function App() {
             <AutocompleteInput
               id="inp-end"
               label="Destination"
-              placeholder="T.ex. Göteborg"
+              placeholder="T.ex. Göteborg, Paris…"
               value={endVal}
               onChange={handleEndChange}
               onSelect={handleEndSelect}
