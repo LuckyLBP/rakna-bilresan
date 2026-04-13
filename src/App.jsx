@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react'
+import CookieBanner from './CookieBanner'
 import { MapContainer, TileLayer, Polyline, Marker, useMap } from 'react-leaflet'
 import L from 'leaflet'
 
@@ -672,6 +673,8 @@ export default function App() {
         {/* ── FAQ ── */}
         <FAQ />
       </main>
+
+      <CookieBanner />
 
       <footer>
         <div className="footer-about">
