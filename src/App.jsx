@@ -536,8 +536,8 @@ export default function App() {
   return (
     <>
       <header>
-        <a className="logo" href="#">
-          <img className="logo-img" src="/Rakna_bilresan_logo.jpg" alt="Räknabilresa.se logotyp" />
+        <a className="logo" href="/">
+          <img className="logo-img" src="/Rakna_bilresan_logo.jpg" alt="Räknabilresa.se logotyp" width="34" height="34" />
           <span className="logo-name">Räknabilresa<span>.se</span></span>
         </a>
         <span className="header-tag">Resekostnadsberäknare</span>
@@ -692,7 +692,7 @@ export default function App() {
           </p>
           <div className="footer-related">
             <span className="footer-related-label">Liknande verktyg</span>
-            <a className="footer-related-link" href="https://räknabil.se" target="_blank" rel="noopener noreferrer">
+            <a className="footer-related-link" href="https://raknabil.se" target="_blank" rel="noopener noreferrer">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
                 <polyline points="15 3 21 3 21 9" />
