@@ -694,7 +694,7 @@ export default function App() {
           </p>
           <p className="footer-cta">
             Gillar du vad vi gör?{' '}
-            <a href="https://pohlare.com" target="_blank" rel="noopener noreferrer">Hör av dig</a> — vi hjälper gärna med ditt nästa projekt.
+            <a href="mailto:lucas@pohlare.com">Hör av dig</a> — vi hjälper gärna med ditt nästa projekt.
           </p>
           <div className="footer-related">
             <span className="footer-related-label">Liknande verktyg</span>
