@@ -679,7 +679,13 @@ export default function App() {
       <footer>
         <div className="footer-about">
           <div className="footer-logo-row">
-            <a className="footer-brand" href="https://produktionen.se" target="_blank" rel="noopener noreferrer">Produktionen AB</a>
+            <a className="pohlare-badge" href="https://pohlare.com" target="_blank" rel="noopener noreferrer" aria-label="Skapad av din Pohlare – pohlare.com">
+              <img className="pohlare-badge-avatar" src="/pohlare-avatar.webp" alt="" width="40" height="40" />
+              <span className="pohlare-badge-text">
+                <span className="pohlare-badge-label">Skapad av</span>
+                <span className="pohlare-badge-name">din Pohlare</span>
+              </span>
+            </a>
           </div>
           <p className="footer-desc">
             Vi är webbutvecklare som älskar att bygga smarta, enkla verktyg — stora som små.
@@ -688,7 +694,7 @@ export default function App() {
           </p>
           <p className="footer-cta">
             Gillar du vad vi gör?{' '}
-            <a href="mailto:hej@produktionen.se">Hör av dig</a> — vi hjälper gärna med ditt nästa projekt.
+            <a href="https://pohlare.com" target="_blank" rel="noopener noreferrer">Hör av dig</a> — vi hjälper gärna med ditt nästa projekt.
           </p>
           <div className="footer-related">
             <span className="footer-related-label">Liknande verktyg</span>

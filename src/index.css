@@ -995,18 +995,60 @@ footer {
   margin-bottom: 0.875rem;
 }
 
-.footer-brand {
-  font-family: 'Fraunces', serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--navy);
-  letter-spacing: -0.01em;
+/* "Skapad av din Pohlare" badge */
+.pohlare-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 1.25rem 0.4rem 0.45rem;
+  background: var(--navy);
+  border: 1.5px solid rgba(245,183,0,.45);
+  border-radius: 999px;
+  box-shadow: var(--sh-sm);
   text-decoration: none;
-  border-bottom: 2px solid var(--gold);
-  transition: opacity .15s;
+  transition: transform .15s, border-color .15s, box-shadow .15s;
 }
 
-.footer-brand:hover { opacity: 0.75; }
+.pohlare-badge:hover {
+  transform: translateY(-1px);
+  border-color: var(--gold);
+  box-shadow: var(--sh-md);
+}
+
+.pohlare-badge:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.pohlare-badge-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--navy-mid);
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.pohlare-badge-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.pohlare-badge-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: rgba(255,255,255,.6);
+}
+
+.pohlare-badge-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--white);
+}
 
 .footer-desc {
   font-size: 0.875rem;
