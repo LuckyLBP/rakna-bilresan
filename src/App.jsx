@@ -678,23 +678,14 @@ export default function App() {
 
       <footer>
         <div className="footer-about">
-          <div className="footer-logo-row">
-            <a className="pohlare-badge" href="https://pohlare.com" target="_blank" rel="noopener noreferrer" aria-label="Skapad av din Pohlare – pohlare.com">
-              <img className="pohlare-badge-avatar" src="/pohlare-avatar.webp" alt="" width="40" height="40" />
-              <span className="pohlare-badge-text">
-                <span className="pohlare-badge-label">Skapad av</span>
-                <span className="pohlare-badge-name">din Pohlare</span>
-              </span>
-            </a>
-          </div>
           <p className="footer-desc">
-            Vi är webbutvecklare som älskar att bygga smarta, enkla verktyg — stora som små.
+            Jag är webbutvecklare och älskar att bygga smarta, enkla verktyg — stora som små.
             Räknabilresa.se är ett av dem, helt kostnadsfritt att använda.
             Hoppas det underlättar din nästa resa!
           </p>
           <p className="footer-cta">
-            Gillar du vad vi gör?{' '}
-            <a href="mailto:lucas@pohlare.com">Hör av dig</a> — vi hjälper gärna med ditt nästa projekt.
+            Gillar du vad jag gör?{' '}
+            <a href="mailto:lucas@pohlare.com">Hör av dig</a> — jag hjälper gärna till med ditt nästa projekt.
           </p>
           <div className="footer-related">
             <span className="footer-related-label">Liknande verktyg</span>
@@ -707,6 +698,15 @@ export default function App() {
               räknabil.se — Beräkna kostnaden för att köpa en bil
             </a>
           </div>
+        </div>
+        <div className="footer-credit">
+          <a className="pohlare-badge" href="https://pohlare.com" target="_blank" rel="noopener noreferrer" aria-label="Skapad av din Pohlare – pohlare.com">
+            <img className="pohlare-badge-avatar" src="/pohlare-avatar.webp" alt="" width="40" height="40" />
+            <span className="pohlare-badge-text">
+              <span className="pohlare-badge-label">Skapad av</span>
+              <span className="pohlare-badge-name">din Pohlare</span>
+            </span>
+          </a>
         </div>
         <div className="footer-meta">
           Använder <strong>OSRM</strong> för ruttberäkning och <strong>Nominatim</strong> för geokodning.

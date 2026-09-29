@@ -991,8 +991,10 @@ footer {
   margin-bottom: 1.25rem;
 }
 
-.footer-logo-row {
-  margin-bottom: 0.875rem;
+.footer-credit {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
 /* "Skapad av din Pohlare" badge */
