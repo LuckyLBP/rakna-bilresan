@@ -1,15 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { CAR_OPTIONS } from '../lib/cars'
 import { parseNum } from '../lib/format'
 
 /* ── NumInput: decimal comma friendly, can be emptied while typing ── */
 export function NumInput({ id, value, onChange }) {
   const [text, setText] = useState(String(value).replace('.', ','))
-  // Re-sync when the value is changed from outside (e.g. switching car type)
-  useEffect(() => {
-    if (parseNum(text) !== value) setText(String(value).replace('.', ','))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  const [prevValue, setPrevValue] = useState(value)
+  // Re-sync when the value is changed from outside (switching car type). Done during
+  // render rather than in an effect so the field never shows a stale number for a frame.
+  if (value !== prevValue) {
+    setPrevValue(value)
+    if ((parseNum(text) || 0) !== value) setText(String(value).replace('.', ','))
+  }
   return (
     <input
       className="num-input"
