@@ -11,7 +11,7 @@
   --white:      #FFFFFF;
   --gray-100:   #F0EDE6;
   --gray-200:   #E0DDD5;
-  --gray-400:   #9E9A90;
+  --gray-400:   #7A766D;
   --gray-600:   #6B6860;
   --gray-800:   #3A3834;
   --green:      #1E5C45;
@@ -638,13 +638,6 @@ main {
   background: #f0ece4;
 }
 
-/* Apple Maps-like tile appearance:
-   OpenFreeMap Positron gives a clean neutral base,
-   filters warm it up and soften to match Apple's palette */
-.map-card .leaflet-tile-pane {
-  filter: sepia(0.12) saturate(1.1) brightness(1.04) hue-rotate(8deg);
-}
-
 /* Slightly bolder route line to stand out on the light map */
 .map-card .leaflet-overlay-pane path {
   stroke: #1a3a5c;
@@ -896,7 +889,6 @@ main {
 .bd-key { color: var(--gray-600); font-weight: 400; }
 .bd-val { color: var(--navy); font-weight: 600; }
 
-/* ─── FOOTER ──────────────────────────────────────────── */
 /* ─── FAQ SECTION ─────────────────────────────────────── */
 .seo-section {
   margin-bottom: 1rem;
@@ -982,18 +974,38 @@ footer {
   padding: 0 1rem 3rem;
 }
 
-.footer-about {
-  background: var(--white);
-  border-radius: var(--r-xl);
-  border: 1px solid rgba(12,35,64,.06);
-  box-shadow: var(--sh-sm);
-  padding: 1.75rem;
-  margin-bottom: 1.25rem;
+.footer-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  flex-wrap: wrap;
+  padding: 1.5rem 0 1.25rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--gray-200);
 }
 
-.footer-logo-row {
-  margin-bottom: 0.875rem;
+.footer-blurb {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--gray-600);
+  text-align: right;
 }
+
+.footer-blurb a {
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 3px;
+  transition: color .15s;
+}
+
+.footer-blurb a:hover { color: var(--navy-mid); }
 
 /* "Skapad av din Pohlare" badge */
 .pohlare-badge {
@@ -1050,73 +1062,123 @@ footer {
   color: var(--white);
 }
 
-.footer-desc {
-  font-size: 0.875rem;
-  color: var(--gray-600);
-  line-height: 1.65;
-  font-weight: 300;
-  margin-bottom: 0.75rem;
-}
-
-.footer-cta {
-  font-size: 0.875rem;
-  color: var(--gray-600);
-  line-height: 1.65;
-  font-weight: 400;
-  margin-bottom: 1.25rem;
-}
-
-.footer-cta a {
-  color: var(--navy);
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: var(--gold);
-  text-underline-offset: 3px;
-  transition: color .15s;
-}
-
-.footer-cta a:hover { color: var(--navy-mid); }
-
-.footer-related {
+.footer-meta {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--gray-100);
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+  color: var(--gray-600);
+  font-size: 0.72rem;
+  line-height: 1.7;
+  padding-bottom: 1rem;
 }
 
-.footer-related-label {
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--gray-400);
-}
+.footer-meta strong { font-weight: 600; }
 
 .footer-related-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.85rem;
-  font-weight: 500;
+  gap: 0.35rem;
+  font-weight: 600;
   color: var(--navy-mid);
   text-decoration: none;
   transition: color .15s;
 }
 
-.footer-related-link:hover { color: var(--navy); }
+.footer-related-link:hover { color: var(--navy); text-decoration: underline; }
 
-.footer-related-link svg { flex-shrink: 0; opacity: 0.6; }
-
-.footer-meta {
-  text-align: center;
-  color: var(--gray-400);
-  font-size: 0.72rem;
-  line-height: 1.8;
-  padding-bottom: 1rem;
+@media (max-width: 480px) {
+  .footer-strip { flex-direction: column; justify-content: center; text-align: center; }
+  .footer-blurb { align-items: center; text-align: center; }
 }
 
-.footer-meta strong { color: var(--gray-600); font-weight: 500; }
+/* ─── ADDED: a11y, live results, autocomplete states ───── */
+:focus-visible {
+  outline: 2px solid var(--navy-light);
+  outline-offset: 2px;
+}
+
+.toggle-row { width: 100%; font: inherit; text-align: left; cursor: pointer; }
+.input-clear { min-width: 32px; min-height: 32px; }
+
+.ac-spin {
+  position: absolute;
+  right: 2.6rem;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+  border: 2px solid var(--gray-200);
+  border-top-color: var(--navy);
+  border-radius: 50%;
+  animation: rotate .7s linear infinite;
+}
+
+.ac-empty {
+  padding: 0.875rem 1rem;
+  font-size: 0.85rem;
+  color: var(--gray-600);
+}
+
+.map-status {
+  position: absolute;
+  top: 0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: var(--sh-md);
+}
+.map-status-err { background: var(--red); white-space: normal; max-width: calc(100% - 1.5rem); text-align: center; }
+
+.results { scroll-margin-top: 4.5rem; }
+
+.res-stale {
+  margin-bottom: 0.875rem;
+  padding: 0.6rem 0.875rem;
+  border-radius: var(--r-sm);
+  background: #FFF6D6;
+  border: 1px solid rgba(245,183,0,.5);
+  color: var(--navy);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.res-share {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.7rem 1rem;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--gray-200);
+  background: var(--white);
+  color: var(--navy);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.res-share:hover { border-color: var(--navy); background: var(--cream); }
+
+@media (max-width: 480px) {
+  .map-card .leaflet-container { height: 260px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 /* ─── COOKIE BANNER ───────────────────────────────────── */
 .cookie-bar {
@@ -1181,8 +1243,12 @@ footer {
   .cookie-bar {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: 0.6rem;
+    padding: 0.8rem 1rem;
+    bottom: 0.5rem;
   }
+  .cookie-text { font-size: 0.75rem; line-height: 1.4; }
+  .cookie-btn  { padding: 0.45rem 0.75rem; }
   .cookie-actions { width: 100%; }
   .cookie-btn     { flex: 1; text-align: center; }
 }

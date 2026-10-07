@@ -52,77 +52,22 @@
         "Kostnad per person",
         "Tur och retur",
         "Interaktiv karta med ruttvisning",
-        "Verklig distans via OSRM",
+        "Verklig vägdistans och restid",
         "Länk till Google Maps och Apple Maps"
       ]
     }
     </script>
 
-    <!-- ─── FAQ Structured Data ──────────────────────────── -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hur mycket kostar det att köra bil i Sverige?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Det beror på biltyp och bränslepris. En genomsnittlig bensinbil kostar ungefär 14–17 kr per mil, diesel är något billigare och elbil kostar typiskt 4–6 kr per mil. Ange din start och destination i kalkylatorn så får du ett exakt svar baserat på din bil."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hur beräknar jag bränslekostnaden för min resa?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ange startort, destination och ditt aktuella bränslepris — kalkylatorn hämtar den verkliga vägdistansen och räknar ut vad resan kostar. Du kan också justera förbrukningen om du vet hur mycket just din bil drar."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hur mycket kostar det att köra Stockholm–Göteborg?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Sträckan är ca 470 km via E4. Med en vanlig bensinbil (8,5 l/100 km, bensin 18,50 kr/l) landar bränslekostnaden på ungefär 740 kr enkel resa. Kör du elbil med 20 kWh/100 km och 2,50 kr/kWh kostar samma resa ca 235 kr."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Är det billigare att köra elbil eller bensinbil på en lång resa?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Elbil är oftast betydligt billigare — skillnaden kan vara 3–4 gånger lägre kostnad per mil. På en längre resa som Stockholm–Malmö (ca 620 km) sparar du typiskt 600–800 kr med elbil jämfört med bensin, beroende på elpriset."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hur delar man resekostnaden om man åker flera personer?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ange antalet personer i kalkylatorn så visas kostnaden per person automatiskt. Är ni fyra som delar på en Stockholm–Göteborg-resa betalar var och en ungefär 185 kr istället för 740 kr."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan jag räkna på tur och retur direkt?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja — slå på \"Tur & retur\" i kalkylatorn så dubblas distansen och totalkostnaden direkt. Smidigt för dagsutflykter, pendling eller om du ska hämta någon."
-          }
-        }
-      ]
-    }
-    </script>
+    <!-- ─── FAQ Structured Data (generated from src/content/faq.js) ── -->
+    <!--FAQ_JSONLD-->
 
     <!-- ─── Favicon ────────────────────────────────────────── -->
     <link rel="icon"             type="image/png"  href="/raknabilresa_favicon.png" />
     <link rel="apple-touch-icon"                   href="/raknabilresa_favicon.png" />
-    <meta property="og:image"        content="https://raknabilresa.se/Rakna_bilresan_logo.jpg" />
-    <meta property="og:image:width"  content="500" />
-    <meta property="og:image:height" content="500" />
-    <meta name="twitter:image"       content="https://raknabilresa.se/Rakna_bilresan_logo.jpg" />
+    <meta property="og:image"        content="https://raknabilresa.se/og-image.png" />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:image"       content="https://raknabilresa.se/og-image.png" />
 
     <!-- ─── Google Analytics (Consent Mode v2) ──────────────── -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5XW2251JLH"></script>
@@ -140,7 +85,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--PRERENDER--></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

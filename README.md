@@ -2,13 +2,14 @@
 
 Gratis kalkylator för att beräkna kostnaden för en bilresa i Sverige. Stöd för bensin, diesel, elbil och hybrid.
 
-**Live:** [rakna-bilresan.vercel.app](https://rakna-bilresan.vercel.app)
+**Live:** [raknabilresa.se](https://raknabilresa.se)
 
 ## Stack
 
-- React 18 + Vite
-- react-leaflet v4 (Leaflet.js) — interaktiv karta med ruttvisning
-- Nominatim API — geokodning av svenska adresser
+- React 19 + Vite 7
+- react-leaflet v5 + MapLibre GL — interaktiv karta med ruttvisning
+- OpenFreeMap — kartunderlag (ingen API-nyckel)
+- Photon (komoot) — ortsök och geokodning
 - OSRM API — ruttberäkning och distans
 
 ## Kom igång
@@ -37,7 +38,10 @@ Projektet är konfigurerat för Vercel. Pusha till main-branchen så deployas de
 
 ```
 src/
-  App.jsx       — huvudkomponent (kalkylator, karta, FAQ)
+  App.jsx       — sidans state och sammansättning
+  components/   — AutocompleteInput, Controls, RouteMap, Results, Faq, Footer
+  lib/          — format, places (Photon/OSRM), cars
+  content/faq.js — FAQ, enda källan (appen + JSON-LD + statisk HTML vid bygget)
   index.css     — globala stilar
   main.jsx      — entry point
 public/
@@ -45,4 +49,5 @@ public/
   sitemap.xml
   Rakna_bilresan_logo.jpg
 index.html      — SEO-metadata, JSON-LD, Open Graph
+vite.config.js  — injicerar FAQ-schema och crawlbar HTML vid bygget
 ```
