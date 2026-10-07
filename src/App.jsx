@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react'
 import CookieBanner from './CookieBanner'
-import { MapContainer, TileLayer, Polyline, Marker, useMap } from 'react-leaflet'
+import { MapContainer, Polyline, Marker, useMap } from 'react-leaflet'
 import L from 'leaflet'
 
 // Fix Leaflet default marker icons (broken with Vite bundling)
@@ -10,6 +10,41 @@ L.Icon.Default.mergeOptions({
   iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
   shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 })
+
+// OpenFreeMap Positron vector basemap – free, no API key
+function BaseMap() {
+  const map = useMap()
+  useEffect(() => {
+    let layer, cancelled = false
+    // Loaded on demand so MapLibre stays out of the initial bundle
+    Promise.all([
+      import('@maplibre/maplibre-gl-leaflet'),
+      import('maplibre-gl'),
+      import('maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'),
+      import('maplibre-gl/dist/maplibre-gl.css'),
+    ]).then(([{ maplibreGL }, { setWorkerUrl }, { default: workerUrl }]) => {
+      if (cancelled) return
+      // Vite bundles MapLibre, so point it at the separately built worker
+      setWorkerUrl(workerUrl)
+      layer = maplibreGL({ style: 'https://tiles.openfreemap.org/styles/positron' }).addTo(map)
+      // Show Swedish place names (falls back to the local name)
+      const ml = layer.getMaplibreMap()
+      ml.once('load', () => {
+        for (const l of ml.getStyle().layers) {
+          const field = l.layout?.['text-field']
+          if (field && JSON.stringify(field).includes('"name')) {
+            ml.setLayoutProperty(l.id, 'text-field', ['coalesce', ['get', 'name:sv'], ['get', 'name']])
+          }
+        }
+      })
+    })
+    return () => {
+      cancelled = true
+      if (layer) map.removeLayer(layer)
+    }
+  }, [map])
+  return null
+}
 
 const startIcon = L.divIcon({
   className: '',
@@ -65,12 +100,29 @@ function fmtTime(sec) {
   return `${h} tim ${m} min`
 }
 
-async function geocodeQuery(q) {
-  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1`
-  const res = await fetch(url, { headers: { 'Accept-Language': 'sv', 'User-Agent': 'Räknabilresa.se/1.0' } })
+// Photon (komoot) – OSM geocoder built for search-as-you-type, no API key.
+// lang=default gives local names (Göteborg, not Gothenburg) whatever the browser language.
+// Results are mapped to { place_id, display_name, lat, lon }.
+async function searchPlaces(q, limit) {
+  const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=${limit}&lang=default`
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`Photon ${res.status}`)
   const data = await res.json()
-  if (!data?.length) return null
-  return { lat: +data[0].lat, lon: +data[0].lon }
+  return (data.features ?? []).map(f => {
+    const p = f.properties
+    const parts = [p.name ?? [p.street, p.housenumber].filter(Boolean).join(' '), p.city, p.county, p.country]
+    return {
+      place_id:     `${p.osm_type}${p.osm_id}`,
+      display_name: parts.filter((x, i) => x && parts.indexOf(x) === i).join(', '),
+      lat:          f.geometry.coordinates[1],
+      lon:          f.geometry.coordinates[0],
+    }
+  }).filter((r, i, all) => all.findIndex(o => o.display_name === r.display_name) === i)
+}
+
+async function geocodeQuery(q) {
+  const [hit] = await searchPlaces(q, 1)
+  return hit ? { lat: +hit.lat, lon: +hit.lon } : null
 }
 
 /* ── AutocompleteInput ─────────────────────────────────── */
@@ -95,9 +147,7 @@ function AutocompleteInput({ id, label, placeholder, value, onChange, onSelect, 
     if (val.trim().length < 2) { setSuggestions([]); setOpen(false); return }
     timerRef.current = setTimeout(async () => {
       try {
-        const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(val)}&format=json&limit=5&addressdetails=1`
-        const res = await fetch(url, { headers: { 'Accept-Language': 'sv', 'User-Agent': 'Räknabilresa.se/1.0' } })
-        const data = await res.json()
+        const data = await searchPlaces(val, 5)
         setSuggestions(data ?? [])
         setHiIdx(-1)
         setOpen((data?.length ?? 0) > 0)
@@ -259,10 +309,7 @@ function RouteMap({ startCoords, endCoords, geometry }) {
         zoomControl={true}
         attributionControl={false}
       >
-        <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        />
+        <BaseMap />
         {routePositions && (
           <Polyline
             positions={routePositions}
@@ -273,6 +320,9 @@ function RouteMap({ startCoords, endCoords, geometry }) {
         <Marker position={endPos}   icon={endIcon}   />
         <FitBounds start={startPos} end={endPos} />
       </MapContainer>
+      <div className="map-attribution">
+        <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>
+      </div>
 
       <div className="map-nav-btns">
         <a className="map-nav-btn map-nav-google" href={googleUrl} target="_blank" rel="noopener noreferrer">

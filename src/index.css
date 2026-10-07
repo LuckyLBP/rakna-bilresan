@@ -639,7 +639,7 @@ main {
 }
 
 /* Apple Maps-like tile appearance:
-   CartoDB Positron gives a clean neutral base,
+   OpenFreeMap Positron gives a clean neutral base,
    filters warm it up and soften to match Apple's palette */
 .map-card .leaflet-tile-pane {
   filter: sepia(0.12) saturate(1.1) brightness(1.04) hue-rotate(8deg);
